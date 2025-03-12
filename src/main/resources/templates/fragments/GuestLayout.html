@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+<html th:fragment="layout (title, content, h2)" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:replace="${title}">Layout title</title>
+        <link th:href="@{/css/main.css}" rel="stylesheet" /> 
+    </head>
+    <body> 
+        <section class="h-svh w-svw flex">
+            <div class="shadow-lg rounded-xl w-[30%] m-auto p-4">
+                <h2 class="text-3xl font-semibold py-4 text-center" th:text="${h2}"></h2>
+                <div th:replace="${content}"></div>
+            </div>
+        </section>
+    </body>
+</html>

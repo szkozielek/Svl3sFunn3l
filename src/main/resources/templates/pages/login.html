@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{fragments/GuestLayout :: layout(~{::title}, ~{::form}, Witaj)}">
     <head>
         <title>Login page</title>
-        <link th:href="@{/css/main.css}" rel="stylesheet" /> 
     </head>
     <body>
-        <div class="h-svh w-svw flex">
-            <div class="shadow-lg rounded-xl w-[30%] m-auto p-4">
-                <h2 class="text-3xl font-semibold py-4 text-center">Welcome!</h2>
-                <form class=" flex flex-col">
-                    
-                    <label for="login" class="py-2">Login:</label> 
-                    <input id="login" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400"></input>
-                    <label for="password" class="py-2">Password:</label> 
-                    <input id="password" type="password" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400"></input>
-                    <div class="pt-4 flex justify-center"><button type="submit" class="px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 transition duration-150 text-white cursor-pointer">Log in!</button></div>
-                </form>
-            </div>
-        </div>
+        <form class="flex flex-col" th:action="@{/login}" method="post">
+            <label for="login" class="py-2">E-mail:</label> 
+            <input id="login" name="username" type="text" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400 py-1 px-2"></input>
+            <label for="password" class="py-2">Hasło:</label> 
+            <input id="password" type="password" name="password" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400 py-1 px-2"></input>
+            <a href="/register" class="text-blue-600 hover:text-blue-700 cursor-pointer">Nie masz konta? załóż je teraz!</a>
+            <div class="pt-4 flex justify-center"><button type="submit" class="px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 transition duration-150 text-white cursor-pointer">Zaloguj</button></div>
+        </form>
     </body>
 </html>

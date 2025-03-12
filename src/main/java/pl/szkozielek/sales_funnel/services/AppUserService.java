@@ -26,6 +26,6 @@ public class AppUserService implements UserDetailsService{
                 .build();
 
         }
-        return null;
+        throw new UsernameNotFoundException("user not founded " + email);
     }
 }
