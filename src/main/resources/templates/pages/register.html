@@ -11,15 +11,15 @@
 
             <label for="login" class="py-2">Email:</label> 
             <input th:field="${registerDTO.email}" id="login" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400 py-1 px-2"></input>
-            <p th:if="${#fields.hasErrors('email')}" th:errorclass="text-red" th:errors="${registerDTO.email}"></p>
+            <p th:if="${#fields.hasErrors('email')}" th:errorclass="text-red-500" th:errors="${registerDTO.email}"></p>
             
             <label for="password" class="py-2">Hasło:</label> 
             <input th:field="${registerDTO.password}" id="password" type="password" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400 py-1 px-2"></input>
-            <p th:if="${#fields.hasErrors('password')}" th:errorclass="text-red" th:errors="${registerDTO.password}"></p>
+            <p th:if="${#fields.hasErrors('password')}" th:errorclass="text-red-500" th:errors="${registerDTO.password}"></p>
             
             <label for="confirmPassword" class="py-2">Powtórz hasło:</label> 
             <input th:field="${registerDTO.confirmPassword}" id="confirmPassword" type="password" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400 py-1 px-2"></input>
-            <p th:if="${#fields.hasErrors('confirmPassword')}" th:errorclass="text-red" th:errors="${registerDTO.confirmPassword}"></p>
+            <p th:if="${#fields.hasErrors('confirmPassword')}" th:errorclass="text-red-500" th:errors="${registerDTO.confirmPassword}"></p>
             
             <div class="pt-4 flex justify-center items center gap-4">
                 <a href="/login" class="px-4 py-2 rounded-xl bg-transparent hover:bg-grey-50 transition duration-150 text-slate-700 cursor-pointer border">Anuluj</a>
