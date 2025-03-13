@@ -58,7 +58,7 @@ public class CompanyController {
     }
 
     @GetMapping("/companies/{id}/edit")
-    public String create(Model model, Authentication authentication, @PathVariable("id") Integer id)
+    public String edit(Model model, Authentication authentication, @PathVariable("id") Integer id)
     {
         Optional<Company> myCompany = repo.findById(id);
         if(!myCompany.isPresent()){
