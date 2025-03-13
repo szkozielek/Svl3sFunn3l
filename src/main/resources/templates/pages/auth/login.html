@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html th:replace="~{fragments/GuestLayout :: layout(~{::title}, ~{::form}, Witaj)}">
+    <head>
+        <title>Svl3s Funn3l - Logowanie</title>
+    </head>
+    <body>
+        <form class="flex flex-col" th:action="@{/login}" method="post">
+            <div th:if="${param.error}" class="bg-red-300 border border-red-500 w-full py-4 px-2 rounded">    
+                Nieproawidłowe dane logowania
+            </div>
+            <div th:if="${param.logout}" class="bg-green-300 border border-green-500 w-full py-4 px-2 rounded"> 
+                Wylogowano pomyślnie!
+            </div>
+            <label for="login" class="py-2">E-mail:</label> 
+            <input id="login" name="username" type="text" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400 py-1 px-2"></input>
+            <label for="password" class="py-2">Hasło:</label> 
+            <input id="password" type="password" name="password" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400 py-1 px-2"></input>
+            <a href="/register" class="text-blue-600 hover:text-blue-700 cursor-pointer">Nie masz konta? załóż je teraz!</a>
+            <div class="pt-4 flex justify-center"><button type="submit" class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 transition duration-150 text-white cursor-pointer">Zaloguj</button></div>
+        </form>
+    </body>
+</html>
