@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html th:replace="~{fragments/AuthenticatedLayout :: layout(~{::title}, ~{::section})}">
+    <head>
+        <title>Firmy</title>
+    </head>
+    <body>
+        <section>
+            <div class="flex justify-between items-center pb-4">
+                <h2 class="text-3xl font-semibold py-4">Lista firm</h2>
+                <a href="companies/create"><button type="button" class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 transition duration-150 text-white cursor-pointer">Dodaj firmę</button></a>
+            </div>
+            <table class="table-auto w-full">
+                
+                    <thead>
+                        
+                            <tr class="bg-gray-100">
+                                <th class="py-2 w-10">Lp.</th>
+                                <th class="py-2">
+                                    <span>Nazwa</span>
+                                    <form th:metod="get" th:object="${filterDTO}" th:action="@{/companies}">
+                                        <input th:field="${filterDTO.filter}" class="w-2/3 border bg-white border-gray-300 rounded transition duration-150 hover:border-gray-400 px-2 font-normal"/>
+                                    </form>
+                                </th>
+                                <th class="py-2">Numer identyfikacji</th>
+                                <th class="py-2">Kapitał</th>
+                                <th class="py-2"></th>
+                            </tr>
+                        
+                    </thead>
+                </form>
+                <tbody>
+                    <tr th:each="company, iStat: ${companies}" th:class="${iStat.even ? 'bg-green-50' : 'bg-white'}">
+                        <td class="py-2 px-4" th:text="${iStat.count}+."></td>
+                        <td class="py-2 px-4 grid grid-cols-1">
+                            <div class="truncate max-w-96" th:text="${company.name}"></div>
+                            <div class="truncate max-w-96 text-sm text-slate-400" th:text="(${company.shortname})"></div>
+                        </td>
+                        <td class="py-2 px-4" th:text="${company.identificationNumber}"></td>
+                        <td class="py-2 px-4 text-end" th:text="${company.shareCapital}"></td>
+                        <td class="py-2 px-4 w-30 flex gap-2">
+                            <a th:href="@{/companies/{id}/edit(id=${company.id})}">
+                                <button type="button" class="px-2 py-1 rounded-lg border border-green-600 hover:border-green-700 hover:text-green-700 transition duration-150 text-green-600 cursor-pointer">Edytuj</button>
+                            </a>
+                            <form th:method="delete" th:action="@{/companies/{id}(id=${company.id})}">
+                                <button type="submit" class="px-2 py-1 rounded-lg border border-red-600 hover:border-red-700 hover:text-red-700 transition duration-150 text-red-600 cursor-pointer">Usuń</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div th:if="${#lists.isEmpty(companies)}" class="w-full flex justify-center items-center flex-col py-8">
+                <img th:src="@{/img/empty-inbox-svgrepo-com.svg}" class="h-20"/>
+                <p class="text-slate-600 text-lg py-2">Baza firm jest pusta</p>
+            </div>
+        </section>
+    </body>
+</html>

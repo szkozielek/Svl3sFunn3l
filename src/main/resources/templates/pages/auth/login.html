@@ -2,7 +2,7 @@
 
 <html th:replace="~{fragments/GuestLayout :: layout(~{::title}, ~{::form}, Witaj)}">
     <head>
-        <title>Login page</title>
+        <title>Svl3s Funn3l - Logowanie</title>
     </head>
     <body>
         <form class="flex flex-col" th:action="@{/login}" method="post">
@@ -17,7 +17,7 @@
             <label for="password" class="py-2">Hasło:</label> 
             <input id="password" type="password" name="password" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400 py-1 px-2"></input>
             <a href="/register" class="text-blue-600 hover:text-blue-700 cursor-pointer">Nie masz konta? załóż je teraz!</a>
-            <div class="pt-4 flex justify-center"><button type="submit" class="px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 transition duration-150 text-white cursor-pointer">Zaloguj</button></div>
+            <div class="pt-4 flex justify-center"><button type="submit" class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 transition duration-150 text-white cursor-pointer">Zaloguj</button></div>
         </form>
     </body>
 </html>

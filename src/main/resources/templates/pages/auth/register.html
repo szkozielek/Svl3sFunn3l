@@ -2,7 +2,7 @@
 
 <html th:replace="~{fragments/GuestLayout :: layout(~{::title}, ~{::form}, Rejestracja)}">
     <head>
-        <title>Register page</title>
+        <title>Svl3s Funn3l - Rejestracja</title>
     </head>
     <body>
         <form class="flex flex-col" method="post" th:object="${registerDTO}">
@@ -22,8 +22,8 @@
             <p th:if="${#fields.hasErrors('confirmPassword')}" th:errorclass="text-red-500" th:errors="${registerDTO.confirmPassword}"></p>
             
             <div class="pt-4 flex justify-center items center gap-4">
-                <a href="/login" class="px-4 py-2 rounded-xl bg-transparent hover:bg-grey-50 transition duration-150 text-slate-700 cursor-pointer border">Anuluj</a>
-                <button type="submit" class="px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 transition duration-150 text-white cursor-pointer">Zarejestruj</button>
+                <a href="/login"><button type="button" class="px-4 py-2 rounded-lg bg-white hover:bg-gray-50 transition duration-150 text-slate-700 cursor-pointer border">Anuluj</button></a>
+                <button type="submit" class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 transition duration-150 text-white cursor-pointer">Zarejestruj</button>
             </div>
         </form>
     </body>

@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import pl.szkozielek.sales_funnel.dto.RegisterDTO;
 import pl.szkozielek.sales_funnel.models.AppUser;
-import pl.szkozielek.sales_funnel.models.RegisterDTO;
 import pl.szkozielek.sales_funnel.repositories.AppUserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,9 +29,9 @@ public class RegisterController {
     public String show(Model model)
     {
         RegisterDTO registerData = new RegisterDTO();
-        model.addAttribute(registerData);
+        model.addAttribute("registerDTO", registerData);
         model.addAttribute("success", false);
-        return "pages/register";
+        return "pages/auth/register";
     }
 
     @PostMapping("/register")
@@ -56,7 +56,7 @@ public class RegisterController {
 
         if(result.hasErrors())
         {
-            return "pages/register";
+            return "pages/auth/register";
         }
 
         try{
@@ -74,9 +74,10 @@ public class RegisterController {
             result.addError(
                 new FieldError("registerDTO", "email", except.getMessage())
             );
+            return "pages/auth/register";
         }
         
-        return "pages/register";
+        return "pages/auth/login";
     }
     
 }

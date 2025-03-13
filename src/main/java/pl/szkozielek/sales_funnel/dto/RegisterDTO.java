@@ -1,4 +1,4 @@
-package pl.szkozielek.sales_funnel.models;
+package pl.szkozielek.sales_funnel.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

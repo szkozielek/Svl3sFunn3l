@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:replace="${title}">Layout title</title>
+        <link th:href="@{/css/main.css}" rel="stylesheet" /> 
+    </head>
+    <body class="text-slate-800">
+        <main class="grid grid-cols-[16rem_1fr] relative">
+            <nav class="grid grid-cols-[16rem_1fr] w-full h-16 fixed top-0 bg-white z-10 shadow">
+                <div class="flex justify-center items-center">
+                    <a href="/"><img th:src="@{/img/logo.svg}" class="h-16"/></a>
+                </div>
+                <div class="flex justify-end items-center gap-2 py-2 px-2">
+                    <span th:text="${auth_username}"></span>
+                    <form th:action="@{/logout}" method="post" class="flex flex-col justify-center">
+                        <button type="submit" class="px-4 py-2 rounded-xl text-green-600 hover:text-green-700 transition duration-150 cursor-pointer">Wyloguj</button>
+                    </form>
+                </div>
+            </nav>
+            <aside class="h-svh sticky top-0 pt-16 shadow">
+                <ul class="py-4 grid grid-cols-1 gap-2">
+                    <li>
+                        <a href="/companies">
+                            <div class="px-8 py-4 w-full flex items-center gap-2 text-lg hover:bg-gray-100 hover:text-slate-900 transition duration-150"><img th:src="@{/img/company-svgrepo-com.svg}" class="h-6"/><div>Firmy</div></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/stages">
+                            <div class="px-8 py-4 w-full flex items-center gap-2 text-lg hover:bg-gray-100 hover:text-slate-900 transition duration-150"><img th:src="@{/img/stage-all-svgrepo-com.svg}" class="h-6"/><div>Etapy</div></div>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+            <section class="overflow-y-auto pt-24 px-8 bg-gray-50">
+                <div class="min-h-11/12 bg-white rounded-lg shadow-xl p-6 mb-8">
+                    <div th:replace="${content}">
+                        Some content
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    </body>
+</html>
