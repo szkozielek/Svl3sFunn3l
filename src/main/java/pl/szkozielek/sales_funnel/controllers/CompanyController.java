@@ -121,13 +121,16 @@ public class CompanyController {
             return String.format("pages/companies/%d/edit", id);
         }
         try{
-            Company newCompany = new Company();
-            newCompany.setName(companyData.getName());
-            newCompany.setShortname(companyData.getShortname());
-            newCompany.setIdentificationNumber(companyData.getIdentificationNumber());
-            newCompany.setShareCapital(companyData.getShareCapital());
-            newCompany.setCreatedAt(new Date());
-            repo.save(newCompany);
+            Optional<Company> tryCompany = repo.findById(Integer.parseInt(id));
+            if(!tryCompany.isPresent()){
+                throw new EntityNotFoundException("Company was not found");
+            }
+            Company updatedCompany = tryCompany.get();
+            updatedCompany.setName(companyData.getName());
+            updatedCompany.setShortname(companyData.getShortname());
+            updatedCompany.setIdentificationNumber(companyData.getIdentificationNumber());
+            updatedCompany.setShareCapital(companyData.getShareCapital());
+            repo.save(updatedCompany);
 
             model.addAttribute("companyDTO", new CompanyDTO());
             model.addAttribute("success", true);
