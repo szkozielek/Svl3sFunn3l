@@ -21,6 +21,8 @@ import pl.szkozielek.sales_funnel.dto.CompanyDTO;
 import pl.szkozielek.sales_funnel.dto.FilterDTO;
 import pl.szkozielek.sales_funnel.models.Company;
 import pl.szkozielek.sales_funnel.repositories.CompanyRepository;
+import pl.szkozielek.sales_funnel.services.CompanyStageService;
+
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,6 +32,9 @@ public class CompanyController {
 
     @Autowired 
     private CompanyRepository repo;
+
+    @Autowired
+    private CompanyStageService stageAssignService;
 
     @GetMapping("/companies")
     public String index(Model model, Authentication authentication, @RequestParam(required = false) String filter)
@@ -147,6 +152,7 @@ public class CompanyController {
     @DeleteMapping("/companies/{id}")
     public String destroy(@PathVariable("id") Integer id)
     {
+        stageAssignService.detachAllStagesFromCompany(id);
         repo.deleteById(id);
         return "redirect:/companies";
     }

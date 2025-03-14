@@ -21,6 +21,7 @@ public class AuntenticateConfig {
             .requestMatchers("/logout").permitAll()
             .requestMatchers("/css/**").permitAll()
             .requestMatchers("/img/**").permitAll()
+            .requestMatchers("/favicon.ico").permitAll()
             .anyRequest().authenticated()
         )
         .formLogin(form -> { 

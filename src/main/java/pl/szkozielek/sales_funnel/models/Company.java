@@ -1,11 +1,13 @@
 package pl.szkozielek.sales_funnel.models;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +29,17 @@ public class Company {
     private String identificationNumber;
 
     private Date createdAt;
+
+    @ManyToMany(mappedBy = "companies")
+    private List<Stage> stages;
+
+    public List<Stage> getStages() {
+        return stages;
+    }
+
+    public void setStages(List<Stage> stages) {
+        this.stages = stages;
+    }
 
     public Date getCreatedAt() {
         return createdAt;

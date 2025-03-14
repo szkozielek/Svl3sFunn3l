@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
+import pl.szkozielek.sales_funnel.dto.CompanyStageDTO;
 import pl.szkozielek.sales_funnel.dto.FilterDTO;
 import pl.szkozielek.sales_funnel.dto.StageDTO;
 import pl.szkozielek.sales_funnel.models.Stage;
+import pl.szkozielek.sales_funnel.repositories.CompanyRepository;
 import pl.szkozielek.sales_funnel.repositories.StageRepository;
 
 @Controller
@@ -26,6 +28,9 @@ public class StageController {
 
     @Autowired 
     private StageRepository repo;
+
+    @Autowired
+    private CompanyRepository companyRepo;
 
     @GetMapping("/stages")
     public String index(Model model, Authentication authentication, @RequestParam(required = false) String filter)
@@ -37,6 +42,8 @@ public class StageController {
         model.addAttribute("filterDTO", filterData);
         model.addAttribute("stageDTO", stageData);
         model.addAttribute("stages", repo.findAll());
+        model.addAttribute("freeCompanies", companyRepo.findAllWithoutStages());
+        model.addAttribute("companyStageDTO", new CompanyStageDTO());
         
         return "pages/stages/index";
     }
