@@ -10,7 +10,7 @@ public class FilterDTO
 
     public void setFilter(String filter) {
         if(filter != null){
-            this.filter = filter.replaceAll("[^a-zA-Z]", "");
+            this.filter = filter.replaceAll("[^a-zA-Z0-9]", "");
         }
     }
 }

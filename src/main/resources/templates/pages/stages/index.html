@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html th:replace="~{fragments/AuthenticatedLayout :: layout(~{::title}, ~{::section})}">
+    <head>
+        <title>Etapy - Svl3s Funn3l</title>
+    </head>
+    <body>
+        <section>
+            <div class="flex justify-between items-center pb-4">
+                <h2 class="text-3xl font-semibold py-4">Etapy</h2>
+                <form class="flex gap-2 items-end" th:method="POST" th:object="${stageDTO}" th:action="@{/stages}">
+                    <div>
+                        <label for="name" class="py-2">Nazwa:</label> 
+                        <input th:field="${stageDTO.name}" id="name" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400 py-1 px-2"></input>
+                        <p th:if="${#fields.hasErrors('name')}" th:errorclass="text-red-500" th:errors="${stageDTO.name}"></p>
+                    </div>
+                    <div>
+                        <button type="submit" class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 transition duration-150 text-white cursor-pointer">Dodaj etap</button>
+                    </div>
+                </form>
+            </div>
+            <div class="grid grid-cols-1 gap-4">
+                <div th:each="stage, iStat: ${stages}" class="p-8 border border-gray-300 rounded-xl">
+                    <div class="flex items-center justify-between">
+                        <h3 class="flex items-center gap-4 font-semibold">
+                            <div class="text-xl" th:text="${stage.name}"></div>
+                            <form th:method="delete" th:action="@{/stages/{id}(id=${stage.id})}">
+                                <button type="submit" class="font-normal text-xs px-2 py-1 rounded-lg hover:text-red-700 transition duration-150 text-red-600 cursor-pointer">Usuń etap</button>
+                            </form>
+                        </h3>
+                        <form th:method="PATCH" th:object="${companyStageDTO}" th:action="@{/stages/{id}/companies(id=${stage.id})}" class="flex gap-2 flex-nowrap min-w-1/4">
+                            <select th:field="${companyStageDTO.company_id}" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400 py-1 px-2 cursor-pointer">
+                                <option value="0"></option>
+                                <option th:each="company, iStat: ${freeCompanies}" th:value="${company.id}" th:text="${company.shortname}"></option>
+                            </select>
+                            <p th:if="${#fields.hasErrors('company_id')}" th:errorclass="text-red-500" th:errors="${companyStageDTO.company_id}"></p>
+                            <button type="submit" class="text-nowrap px-2 py-1 rounded-lg hover:text-green-700 transition duration-150 text-green-600 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed">Przypisz firmę</button>
+                        </form>
+                    </div>
+                    <ul th:unless="${#lists.isEmpty(stage.companies)}" class="pt-4">
+                        <li th:each="company, iStat: ${stage.companies}" class="py-2 grid grid-cols-3 px-8">
+                            <div>
+                                <a th:href="@{/companies/{id}/edit(id=${company.id})}" th:text="${company.shortname}" class="text-lg text-blue-700 hover:underline hover:text-blue-500 transition duration-75"></a>
+                            </div>
+                            <form th:method="PATCH" th:object="${companyStageDTO}" th:action="@{/companies/{id}/stages(id=${company.id})}" class="flex gap-2 flex-nowrap">
+                                <select th:field="${companyStageDTO.stage_id}" class="w-full border border-gray-300 rounded transition duration-150 hover:border-gray-400 py-1 px-2 cursor-pointer">
+                                    <option value="0"></option>
+                                    <option th:each="deepStage, iStat: ${stages}" th:unless="${deepStage.id} == ${stage.id}" th:value="${deepStage.id}" th:text="${deepStage.name}"></option>
+                                </select>
+                                <p th:if="${#fields.hasErrors('company_id')}" th:errorclass="text-red-500" th:errors="${companyStageDTO.company_id}"></p>
+                                <button type="submit" class="text-nowrap px-2 py-1 rounded-lg hover:text-green-700 transition duration-150 text-green-600 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed">Zmień etap</button>
+                            </form>
+                        </li>
+                    </ul>
+                    <div th:if="${#lists.isEmpty(stage.companies)}" class="w-full flex justify-center items-center flex-col py-8">
+                        <img th:src="@{/img/empty-inbox-svgrepo-com.svg}" class="h-20 opacity-60"/>
+                        <p class="text-slate-600 text-lg py-2">Nie przypisano firm do etapu</p>
+                    
+                </div>
+            </div>
+            <div th:if="${#lists.isEmpty(stages)}" class="w-full flex justify-center items-center flex-col py-8">
+                <img th:src="@{/img/empty-inbox-svgrepo-com.svg}" class="h-20 opacity-60"/>
+                <p class="text-slate-600 text-lg py-2" th:text="${filterDTO.filter} ? 'Nie znaleziono etapów spełniających kryteria' : 'Nie dodano etapów'">Nie dodano etapów</p>
+            </div>
+        </section>
+    </body>
+</html>

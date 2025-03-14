@@ -4,10 +4,11 @@
     <head>
         <title th:replace="${title}">Layout title</title>
         <link th:href="@{/css/main.css}" rel="stylesheet" /> 
+        <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
     </head>
     <body> 
         <section class="h-svh w-svw flex bg-green-100">
-            <div class="shadow-xl rounded-xl w-[30%] m-auto py-4 px-8 bg-white">
+            <div class="shadow-xl rounded-xl lg:w-[30%] md:w-1/2 w-3/4 m-auto py-4 px-8 bg-white">
                 <h2 class="text-2xl font-semibold py-2 text-slate-800"> 
                     <a href="/">
                         <img th:src="@{/img/logo.svg}" class="h-28 m-auto"/>

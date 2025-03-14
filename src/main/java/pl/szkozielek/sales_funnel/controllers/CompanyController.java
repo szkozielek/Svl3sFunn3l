@@ -21,6 +21,8 @@ import pl.szkozielek.sales_funnel.dto.CompanyDTO;
 import pl.szkozielek.sales_funnel.dto.FilterDTO;
 import pl.szkozielek.sales_funnel.models.Company;
 import pl.szkozielek.sales_funnel.repositories.CompanyRepository;
+import pl.szkozielek.sales_funnel.services.CompanyStageService;
+
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,6 +32,9 @@ public class CompanyController {
 
     @Autowired 
     private CompanyRepository repo;
+
+    @Autowired
+    private CompanyStageService stageAssignService;
 
     @GetMapping("/companies")
     public String index(Model model, Authentication authentication, @RequestParam(required = false) String filter)
@@ -58,7 +63,7 @@ public class CompanyController {
     }
 
     @GetMapping("/companies/{id}/edit")
-    public String create(Model model, Authentication authentication, @PathVariable("id") Integer id)
+    public String edit(Model model, Authentication authentication, @PathVariable("id") Integer id)
     {
         Optional<Company> myCompany = repo.findById(id);
         if(!myCompany.isPresent()){
@@ -121,13 +126,16 @@ public class CompanyController {
             return String.format("pages/companies/%d/edit", id);
         }
         try{
-            Company newCompany = new Company();
-            newCompany.setName(companyData.getName());
-            newCompany.setShortname(companyData.getShortname());
-            newCompany.setIdentificationNumber(companyData.getIdentificationNumber());
-            newCompany.setShareCapital(companyData.getShareCapital());
-            newCompany.setCreatedAt(new Date());
-            repo.save(newCompany);
+            Optional<Company> tryCompany = repo.findById(Integer.parseInt(id));
+            if(!tryCompany.isPresent()){
+                throw new EntityNotFoundException("Company was not found");
+            }
+            Company updatedCompany = tryCompany.get();
+            updatedCompany.setName(companyData.getName());
+            updatedCompany.setShortname(companyData.getShortname());
+            updatedCompany.setIdentificationNumber(companyData.getIdentificationNumber());
+            updatedCompany.setShareCapital(companyData.getShareCapital());
+            repo.save(updatedCompany);
 
             model.addAttribute("companyDTO", new CompanyDTO());
             model.addAttribute("success", true);
@@ -144,6 +152,7 @@ public class CompanyController {
     @DeleteMapping("/companies/{id}")
     public String destroy(@PathVariable("id") Integer id)
     {
+        stageAssignService.detachAllStagesFromCompany(id);
         repo.deleteById(id);
         return "redirect:/companies";
     }
